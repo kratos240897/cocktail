@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../modules/detail/detail.dart';
-import '../../modules/home/data/models/cocktail_response.dart';
-import '../../modules/home/presentation/bloc/home_bloc.dart';
-import '../../modules/home/presentation/home.dart';
+import '../../../modules/detail/detail.dart';
+import '../../../modules/home/data/models/cocktail_response.dart';
+import '../../../modules/home/presentation/bloc/home_bloc.dart';
+import '../../../modules/home/presentation/home.dart';
 import 'routes.dart';
 
 Route? onGenerateRoute(RouteSettings settings) {

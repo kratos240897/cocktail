@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../core/base/service_locator.dart';
 import '../../core/constants/app/styles.dart';
+import '../../core/service/navigation_service.dart';
 import '../home/data/models/cocktail_response.dart';
 
 class Detail extends HookWidget {
@@ -35,17 +37,21 @@ class Detail extends HookWidget {
                   children: [
                     Stack(
                       children: [
-                        Image.network(
-                          drink.strDrinkThumb ?? '',
-                          height: 0.5.sh,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
+                        Hero(
+                          tag: Key(drink.idDrink),
+                          transitionOnUserGestures: true,
+                          child: Image.network(
+                            drink.strDrinkThumb ?? '',
+                            height: 0.5.sh,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                         Positioned(
                           left: 16.h,
                           top: MediaQuery.of(context).viewPadding.top,
                           child: GestureDetector(
-                            onTap: () => Navigator.of(context).pop(),
+                            onTap: () => serviceLocator<NavigationService>().goBack(),
                             child: Container(
                               padding: EdgeInsets.all(16.spMin),
                               decoration: const BoxDecoration(

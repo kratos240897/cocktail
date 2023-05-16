@@ -29,6 +29,9 @@ class DrinksRemoteDataSourceImpl extends DrinksRemoteDataSource {
     try {
       final apiService = serviceLocator<ApiService>();
       final res = await apiService.getRequest(Endpoints.DRINKS, {'s': query});
+      if (res.data['drinks'] == null) {
+        return Right(CocktailResponse(drinks: []).drinks);
+      }
       return Right(CocktailResponse.fromJson(res.data).drinks);
     } catch (e) {
       return Left(ExceptionHandler.handleException(e));
