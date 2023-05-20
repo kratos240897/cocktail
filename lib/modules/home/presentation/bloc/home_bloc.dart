@@ -1,6 +1,6 @@
-import 'package:bloc/bloc.dart';
+import 'package:evolvex_lib/evolvex_lib.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/app/base_bloc.dart';
 import '../../../../core/base/service_locator.dart';
 import '../../data/models/cocktail_response.dart';
 import '../../domain/usecases/get_drinks.dart';

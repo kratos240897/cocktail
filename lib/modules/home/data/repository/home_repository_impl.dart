@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:evolvex_lib/evolvex_lib.dart';
 
-import '../../../../core/base/failure.dart';
 import '../../../../core/base/service_locator.dart';
 import '../../domain/repository/home_repository.dart';
 import '../data_source/drinks_remote_data_source.dart';

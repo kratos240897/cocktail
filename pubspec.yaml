@@ -39,18 +39,13 @@ dependencies:
   flutter_screenutil: ^5.7.0
   flutter_hooks: ^0.18.6
   font_awesome_flutter: ^10.4.0
-  dio: ^5.1.1
-  flutter_loggy_dio: ^3.0.1
-  flutter_loggy: ^2.0.2
-  loggy: ^2.0.3
   json_annotation: ^4.8.0
   flutter_bloc: ^8.1.2
-  bloc: ^8.1.1
-  equatable: ^2.0.5
   get_it: ^7.3.0
   dartz: ^0.10.1
   flutter_colorpicker: ^1.0.3
-  # cached_network_image: ^3.2.3
+  evolvex_lib:
+   git: git@ssh.dev.azure.com:v3/Surya240897/EvolveX%20Library/EvolveX%20Library
 
 dev_dependencies:
   flutter_test:

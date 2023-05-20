@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:evolvex_lib/evolvex_lib.dart';
 
-import '../../../../core/base/failure.dart';
 import '../../data/models/cocktail_response.dart';
 
 

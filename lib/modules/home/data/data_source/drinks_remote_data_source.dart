@@ -1,10 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:evolvex_lib/evolvex_lib.dart';
 
-import '../../../../core/base/exception_handler.dart';
-import '../../../../core/base/failure.dart';
 import '../../../../core/base/service_locator.dart';
 import '../../../../core/constants/app/endpoints.dart';
-import '../../../../core/service/api_service.dart';
 import '../models/cocktail_response.dart';
 
 abstract class DrinksRemoteDataSource {

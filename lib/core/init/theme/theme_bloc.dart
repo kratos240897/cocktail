@@ -1,7 +1,6 @@
-import 'package:bloc/bloc.dart';
-import 'package:cocktail/core/app/base_bloc.dart';
-import 'package:cocktail/core/constants/app/styles.dart';
+import 'package:evolvex_lib/evolvex_lib.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChangeThemeEvent {
   final MaterialColor color;

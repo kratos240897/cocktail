@@ -1,5 +1,5 @@
-import 'package:cocktail/core/constants/app/styles.dart';
 import 'package:cocktail/core/init/theme/theme_bloc.dart';
+import 'package:evolvex_lib/evolvex_lib.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../base/service_locator.dart';
 import '../init/routes/router.dart';
 import '../init/routes/routes.dart';
-import '../service/navigation_service.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
