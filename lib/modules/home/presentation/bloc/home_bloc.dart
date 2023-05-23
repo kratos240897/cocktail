@@ -17,16 +17,15 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   @override
   Future<void> handleEvents(HomeEvent event, Emitter<HomeState> emit) async {
     if (event is FetchDataEvent) {
-      await _fetchDataEventHandler(event, emit);
+      await _fetchDataEventHandler(emit);
     } else if (event is SearchEvent) {
-      await _searchEventHandler(event, emit);
+      await _searchEventHandler(event.query, emit);
     } else if (event is ClearSearchEvent) {
-       _clearSearchEventHandler(event, emit);
+      _clearSearchEventHandler(emit);
     }
   }
 
-  Future<void> _fetchDataEventHandler(
-      FetchDataEvent event, Emitter<HomeState> emit) async {
+  Future<void> _fetchDataEventHandler(Emitter<HomeState> emit) async {
     emit(HomeLoadingState());
     final result = await serviceLocator<GetDrinks>().getDrinks();
     result.fold((failure) => emit(getErrorState(failure.message)), (value) {
@@ -36,18 +35,16 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   }
 
   Future<void> _searchEventHandler(
-      SearchEvent event, Emitter<HomeState> emit) async {
+      String query, Emitter<HomeState> emit) async {
     emit(HomeLoadingState());
-    final result =
-        await serviceLocator<SearchDrinks>().searchDrinks(event.query);
+    final result = await serviceLocator<SearchDrinks>().searchDrinks(query);
     result.fold((failure) => emit(getErrorState(failure.message)), (value) {
       filteredDrinks = value;
       emit(loadedState..copyWith(filteredDrinks));
     });
   }
 
-  void _clearSearchEventHandler(
-      ClearSearchEvent event, Emitter<HomeState> emit) {
+  void _clearSearchEventHandler(Emitter<HomeState> emit) {
     filteredDrinks.clear();
     emit(loadedState..copyWith(drinks));
   }
