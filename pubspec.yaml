@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.5 <3.0.0'
+  sdk: '>=3.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -46,6 +46,14 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   evolvex_lib:
    git: git@ssh.dev.azure.com:v3/Surya240897/EvolveX%20Library/EvolveX%20Library
+  dio: ^5.2.1+1
+  retrofit: ^4.0.1  
+  flutter_loggy_dio: ^3.0.1
+  equatable: ^2.0.5
+  cached_network_image: ^3.2.3
+  flutter_staggered_animations: ^1.1.1
+  go_router: ^9.0.3
+  
 
 dev_dependencies:
   flutter_test:
@@ -58,7 +66,8 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   json_serializable: ^6.6.1
-  build_runner: ^2.3.3
+  build_runner: ^2.4.6
+  retrofit_generator: ^7.0.8
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
