@@ -9,7 +9,8 @@ part of 'drinks_api_service.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
 class _DrinksApiService implements DrinksApiService {
-  _DrinksApiService(this._dio) {
+  _DrinksApiService(
+    this._dio) {
     baseUrl ??= 'https://www.thecocktaildb.com';
   }
 
@@ -22,7 +23,7 @@ class _DrinksApiService implements DrinksApiService {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r's': query};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    const _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<List<Drink>>>(Options(
       method: 'GET',
@@ -40,13 +41,15 @@ class _DrinksApiService implements DrinksApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    List<Drink> value = [];
-    if (_result.data?['drinks'] != null) {
-      value = _result.data?['drinks']!
-          .map<Drink>((dynamic i) => Drink.fromJson(i as Map<String, dynamic>))
+    var value = List<Drink>.empty();
+    if (_result.data != null &&
+        _result.data!.containsKey('drinks') &&
+        _result.data?['drinks'] != null) {
+      value = _result.data!['drinks']
+          .map<Drink>((dynamic i) => DrinkDto.fromJson(i))
           .toList();
     }
-    final httpResponse = HttpResponse(value, _result);
+    final httpResponse = HttpResponse<List<Drink>>(value, _result);
     return httpResponse;
   }
 

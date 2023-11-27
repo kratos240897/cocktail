@@ -1,40 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'cocktail_response.dart';
+part of 'drink_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CocktailResponse _$CocktailResponseFromJson(Map<String, dynamic> json) =>
-    CocktailResponse(
-      drinks: (json['drinks'] as List<dynamic>)
-          .map((e) => Drink.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$CocktailResponseToJson(CocktailResponse instance) =>
-    <String, dynamic>{
-      'drinks': instance.drinks,
-    };
-
-Drink _$DrinkFromJson(Map<String, dynamic> json) => Drink(
+DrinkDto _$DrinkDtoFromJson(Map<String, dynamic> json) => DrinkDto(
       idDrink: json['idDrink'] as String,
       strDrink: json['strDrink'] as String,
       strDrinkAlternate: json['strDrinkAlternate'] as String?,
       strTags: json['strTags'] as String?,
       strVideo: json['strVideo'] as String?,
       strCategory: json['strCategory'] as String,
-      strIBA: json['strIBA'] as String?,
       strAlcoholic: json['strAlcoholic'] as String,
       strGlass: json['strGlass'] as String,
       strInstructions: json['strInstructions'] as String,
-      strInstructionsES: json['strInstructionsES'] as String?,
-      strInstructionsDE: json['strInstructionsDE'] as String?,
-      strInstructionsFR: json['strInstructionsFR'] as String?,
-      strInstructionsIT: json['strInstructionsIT'] as String?,
-      strInstructionsZHHANS: json['strInstructionsZH-HANS'] as String?,
-      strInstructionsZHHANT: json['strInstructionsZH-HANT'] as String?,
       strDrinkThumb: json['strDrinkThumb'] as String?,
       strIngredient1: json['strIngredient1'] as String?,
       strIngredient2: json['strIngredient2'] as String?,
@@ -67,29 +48,18 @@ Drink _$DrinkFromJson(Map<String, dynamic> json) => Drink(
       strMeasure14: json['strMeasure14'] as String?,
       strMeasure15: json['strMeasure15'] as String?,
       strImageSource: json['strImageSource'] as String?,
-      strImageAttribution: json['strImageAttribution'] as String?,
-      strCreativeCommonsConfirmed:
-          json['strCreativeCommonsConfirmed'] as String?,
-      dateModified: json['dateModified'] as String?,
     );
 
-Map<String, dynamic> _$DrinkToJson(Drink instance) => <String, dynamic>{
+Map<String, dynamic> _$DrinkDtoToJson(DrinkDto instance) => <String, dynamic>{
       'idDrink': instance.idDrink,
       'strDrink': instance.strDrink,
       'strDrinkAlternate': instance.strDrinkAlternate,
       'strTags': instance.strTags,
       'strVideo': instance.strVideo,
       'strCategory': instance.strCategory,
-      'strIBA': instance.strIBA,
       'strAlcoholic': instance.strAlcoholic,
       'strGlass': instance.strGlass,
       'strInstructions': instance.strInstructions,
-      'strInstructionsES': instance.strInstructionsES,
-      'strInstructionsDE': instance.strInstructionsDE,
-      'strInstructionsFR': instance.strInstructionsFR,
-      'strInstructionsIT': instance.strInstructionsIT,
-      'strInstructionsZH-HANS': instance.strInstructionsZHHANS,
-      'strInstructionsZH-HANT': instance.strInstructionsZHHANT,
       'strDrinkThumb': instance.strDrinkThumb,
       'strIngredient1': instance.strIngredient1,
       'strIngredient2': instance.strIngredient2,
@@ -122,7 +92,4 @@ Map<String, dynamic> _$DrinkToJson(Drink instance) => <String, dynamic>{
       'strMeasure14': instance.strMeasure14,
       'strMeasure15': instance.strMeasure15,
       'strImageSource': instance.strImageSource,
-      'strImageAttribution': instance.strImageAttribution,
-      'strCreativeCommonsConfirmed': instance.strCreativeCommonsConfirmed,
-      'dateModified': instance.dateModified,
     };

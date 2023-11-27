@@ -2,42 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/injection_container.dart';
-import '../../../features/data/models/cocktail_response.dart';
-import '../../../features/presentation/pages/detail.dart';
-import '../../features/presentation/bloc/home/home_bloc.dart';
-import '../../features/presentation/pages/home.dart';
-import 'routes.dart';
+import '../../core/di/injection_container.dart';
+import '../../features/domain/entities/drink.dart';
+import '../../features/presentation/cubit/home_cubit.dart';
+import '../../features/presentation/pages/detail.dart';
+import '../../features/presentation/pages/home_view.dart';
 
-final router = GoRouter(initialLocation: AppRoutes.home, routes: [
+final router = GoRouter(initialLocation: HomeView.route, routes: [
   GoRoute(
-    name: AppRouteNames.home,
-    path: AppRoutes.home,
+    name: HomeView.routeName,
+    path: HomeView.route,
     pageBuilder: (context, state) => MaterialPage(
-        child: BlocProvider<HomeBloc>(
-            create: (context) => sl(), child: const Home())),
+        child: BlocProvider<HomeCubit>(
+            create: (context) => sl(), child: const HomeView())),
   ),
   GoRoute(
-    name: AppRouteNames.detail,
-    path: AppRoutes.detail,
-    pageBuilder: (context, state) => MaterialPage(
-        child: Detail(drink: state.extra as Drink)),
+    name: DetailView.routeName,
+    path: DetailView.route,
+    pageBuilder: (context, state) =>
+        MaterialPage(child: DetailView(drink: state.extra as Drink)),
   )
 ]);
-
-Route? onGenerateRoute(RouteSettings settings) {
-  final route = settings.name;
-  final args = settings.arguments;
-
-  switch (route) {
-    case AppRoutes.home:
-      return MaterialPageRoute(
-        builder: (context) => BlocProvider<HomeBloc>(
-            create: (context) => sl(), child: const Home()),
-      );
-    case AppRoutes.detail:
-      return MaterialPageRoute(
-          builder: (context) => Detail(drink: args as Drink));
-  }
-  return null;
-}

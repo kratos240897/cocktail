@@ -1,6 +1,4 @@
-// ignore_for_file: constant_identifier_names
-
 class Constants {
-  static const BASE_URL = 'https://www.thecocktaildb.com';
-  static const DB_TABLE_NAME = 'drinks';
+  static const baseURL = 'https://www.thecocktaildb.com';
+  static const dbTableName = 'drinks';
 }

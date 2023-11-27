@@ -9,7 +9,7 @@ class Debounce {
   );
 
   call(void Function() callback) {
-    if (_timer?.isActive ?? false) _timer?.cancel();
+    if (_timer?.isActive ?? false) dispose();
     _timer = Timer(delay, callback);
   }
 

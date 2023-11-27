@@ -10,11 +10,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../data/models/cocktail_response.dart';
+import '../../domain/entities/drink.dart';
 
-class Detail extends HookWidget {
+
+class DetailView extends HookWidget {
   final Drink drink;
-  const Detail({super.key, required this.drink});
+  const DetailView({super.key, required this.drink});
+
+  static const route = '/detail';
+  static const routeName = 'detail';
 
   @override
   Widget build(BuildContext context) {

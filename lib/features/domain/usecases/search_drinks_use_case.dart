@@ -1,6 +1,6 @@
-import '../../../core/resources/data_state.dart';
-import '../../../core/usecase/usecase.dart';
-import '../../data/models/cocktail_response.dart';
+import 'package:evolvex_lib/evolvex_lib.dart';
+
+import '../entities/drink.dart';
 import '../repository/home_repository.dart';
 
 class SearchDrinksUseCase implements UseCase<DataState<List<Drink>>, String> {

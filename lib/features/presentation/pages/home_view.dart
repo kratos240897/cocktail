@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cocktail/core/utils/debounce.dart';
+import 'package:cocktail/features/presentation/pages/detail.dart';
 import 'package:evolvex_lib/evolvex_lib.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -13,23 +13,26 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../config/routes/routes.dart';
 import '../../../config/theme/theme_bloc.dart';
-import '../../../core/injection_container.dart';
-import '../../data/models/cocktail_response.dart';
-import '../bloc/home/home_bloc.dart';
+import '../../../core/utils/debounce.dart';
+import '../../domain/entities/drink.dart';
+import '../cubit/home_cubit.dart';
+import '../cubit/home_state.dart';
 import '../widgets/animated_visibility.dart';
 
-class Home extends HookWidget {
-  const Home({super.key});
+class HomeView extends HookWidget {
+  const HomeView({super.key});
+
+  static const route = '/home';
+  static const routeName = 'home';
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.watch<HomeBloc>();
+    final cubit = context.watch<HomeCubit>();
 
     final themeColor = useState(Styles.colors.kPrimaryColor);
     useEffect(() {
-      Future.microtask(() => bloc.add(FetchDataEvent()));
+      Future.microtask(() => cubit.fetchDrinks());
       return null;
     }, []);
     return Scaffold(
@@ -40,36 +43,42 @@ class Home extends HookWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: GestureDetector(
-                  onTap: () => showColorPickerDialog(context, themeColor),
-                  child: Container(
-                    height: 30.h,
-                    width: 30.w,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              Colors.purple,
-                              Colors.red,
-                              Colors.green,
-                              Colors.blue
-                            ])),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: GestureDetector(
+                      onTap: () => showColorPickerDialog(context, themeColor),
+                      child: Container(
+                        height: 30.h,
+                        width: 30.w,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Colors.purple,
+                                  Colors.red,
+                                  Colors.green,
+                                  Colors.blue
+                                ])),
+                      ),
+                    ),
                   ),
-                ),
+                  Text(
+                    'Beat the heat 🥵\nwith our refreshing Cocktails 🍹',
+                    style:
+                        Styles.textStyles.f18SemiBold().copyWith(height: 1.5),
+                  ),
+                  8.verticalSpace,
+                  CustomSearchBar(cubit: cubit),
+                ],
               ),
-              Text(
-                'Beat the heat 🥵\nwith our refreshing Cocktails 🍹',
-                style: Styles.textStyles.f18SemiBold().copyWith(height: 1.5),
-              ),
-              8.verticalSpace,
-              CustomSearchBar(bloc: bloc),
               16.verticalSpace,
               Expanded(
-                  child: switch (bloc.state) {
+                  child: switch (cubit.state) {
                 HomeLoadingState() =>
                   const Center(child: CircularProgressIndicator()),
                 HomeLoadedState(drinks: var drinks) => drinks.isEmpty
@@ -88,7 +97,7 @@ class Home extends HookWidget {
 
   showColorPickerDialog(
       BuildContext context, ValueNotifier<MaterialColor> themeColor) {
-    final themeBloc = BlocProvider.of<ThemeBloc>(context);
+    final cubit = BlocProvider.of<ThemeCubit>(context);
     showGeneralDialog(
         context: context,
         transitionDuration: const Duration(milliseconds: 150),
@@ -113,7 +122,7 @@ class Home extends HookWidget {
               actions: [
                 TextButton(
                     onPressed: () {
-                      sl<NavigationService>().goBack();
+                      context.pop();
                     },
                     child: Text(
                       'Cancel',
@@ -121,8 +130,8 @@ class Home extends HookWidget {
                     )),
                 TextButton(
                     onPressed: () {
-                      themeBloc.add(ChangeThemeEvent(color: themeColor.value));
-                      sl<NavigationService>().goBack();
+                      cubit.changeTheme(themeColor.value);
+                      context.pop();
                     },
                     child: Text(
                       'Apply',
@@ -156,11 +165,11 @@ class InfoWidget extends StatelessWidget {
 class CustomSearchBar extends HookWidget {
   CustomSearchBar({
     super.key,
-    required this.bloc,
+    required this.cubit,
   });
   final searchController = useTextEditingController();
   final searchFieldHasValue = useState(false);
-  final HomeBloc bloc;
+  final HomeCubit cubit;
   final debounce = Debounce(const Duration(milliseconds: 500));
 
   @override
@@ -171,14 +180,16 @@ class CustomSearchBar extends HookWidget {
           final value = searchController.text.trim();
           if (value.isNotEmpty) {
             searchFieldHasValue.value = true;
-            debounce(() => bloc.add(SearchEvent(query: value)));
+            debounce(() => cubit.searchDrinks(value));
           } else {
             searchFieldHasValue.value = false;
-            bloc.add(ClearSearchEvent());
+            cubit.clearSearch();
           }
         });
       });
-      return null;
+      return () {
+        searchController.dispose();
+      };
     }, []);
     return Container(
       decoration: BoxDecoration(
@@ -199,7 +210,7 @@ class CustomSearchBar extends HookWidget {
                     onTap: () {
                       searchController.clear();
                       searchFieldHasValue.value = false;
-                      bloc.add(ClearSearchEvent());
+                      cubit.clearSearch();
                     },
                     child: Icon(
                       Icons.close,
@@ -251,7 +262,7 @@ class DrinkList extends HookWidget {
           right: 0.0,
           bottom: 0.0,
           child: AnimatedVisibility(
-            visible: isNeedToShowScrollUpButton.value,
+            isVisible: isNeedToShowScrollUpButton.value,
             child: FloatingActionButton(
               onPressed: () => controller.animateTo(
                   controller.position.minScrollExtent,
@@ -287,7 +298,7 @@ class DrinkListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.pushNamed(AppRouteNames.detail, extra: drink),
+      onTap: () => context.push(DetailView.route, extra: drink),
       child: Card(
         margin: EdgeInsets.only(bottom: 12.h),
         shape:

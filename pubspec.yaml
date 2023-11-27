@@ -45,7 +45,7 @@ dependencies:
   dartz: ^0.10.1
   flutter_colorpicker: ^1.0.3
   evolvex_lib:
-   git: git@ssh.dev.azure.com:v3/Surya240897/EvolveX%20Library/EvolveX%20Library
+   git: https://github.com/kratos240897/evolvex_lib.git
   dio: ^5.2.1+1
   retrofit: ^4.0.1  
   flutter_loggy_dio: ^3.0.1

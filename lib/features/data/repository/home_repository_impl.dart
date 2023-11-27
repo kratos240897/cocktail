@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import '../../../core/resources/data_state.dart';
+import 'package:evolvex_lib/evolvex_lib.dart';
+
+import '../../domain/entities/drink.dart';
 import '../../domain/repository/home_repository.dart';
-import '../data_source/remote/drinks_api_service.dart';
-import '../models/cocktail_response.dart';
+import '../source/remote/drinks_api_service.dart';
 import 'package:dio/dio.dart';
 
 class HomeRepositoryImpl extends HomeRepository {
@@ -18,14 +19,14 @@ class HomeRepositoryImpl extends HomeRepository {
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {
-        return DataFailed(DioException(
+        return DataFailed(ExceptionHandler.handleException(DioException(
             error: httpResponse.response.statusMessage,
             response: httpResponse.response,
             type: DioExceptionType.unknown,
-            requestOptions: httpResponse.response.requestOptions));
+            requestOptions: httpResponse.response.requestOptions)));
       }
-    } on DioException catch (e) {
-      return DataFailed(e);
+    } catch (e) {
+      return DataFailed(ExceptionHandler.handleException(e));
     }
   }
 
@@ -37,14 +38,14 @@ class HomeRepositoryImpl extends HomeRepository {
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {
-        return DataFailed(DioException(
+        return DataFailed(ExceptionHandler.handleException(DioException(
             error: httpResponse.response.statusMessage,
             response: httpResponse.response,
             type: DioExceptionType.unknown,
-            requestOptions: httpResponse.response.requestOptions));
+            requestOptions: httpResponse.response.requestOptions)));
       }
-    } on DioException catch (e) {
-      return DataFailed(e);
+    } catch (e) {
+      return DataFailed(ExceptionHandler.handleException(e));
     }
   }
 }

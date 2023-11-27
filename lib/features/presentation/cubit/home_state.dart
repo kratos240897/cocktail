@@ -1,4 +1,6 @@
-part of 'home_bloc.dart';
+import 'package:evolvex_lib/evolvex_lib.dart';
+
+import '../../domain/entities/drink.dart';
 
 sealed class HomeState extends BaseState {}
 

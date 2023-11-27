@@ -1,6 +1,5 @@
 import 'package:evolvex_lib/evolvex_lib.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChangeThemeEvent {
   final MaterialColor color;
@@ -20,19 +19,13 @@ class ThemeErrorState extends ThemeState {
   ThemeErrorState({required this.errorMessage});
 }
 
-class ThemeBloc extends BaseBloc<ChangeThemeEvent, ThemeState> {
-  ThemeBloc()
+class ThemeCubit extends BaseCubit<ThemeState> {
+  ThemeCubit()
       : super(
             initialState: ChangeThemeState(color: Styles.colors.kPrimaryColor));
 
-  @override
-  Future<void> handleEvents(
-      ChangeThemeEvent event, Emitter<ThemeState> emit) async {
-    _changeThemeEventHandler(event, emit);
-  }
-
-  _changeThemeEventHandler(ChangeThemeEvent event, Emitter<ThemeState> emit) {
-    emit(ChangeThemeState(color: event.color));
+  changeTheme(MaterialColor color) {
+    emit(ChangeThemeState(color: color));
   }
 
   @override
